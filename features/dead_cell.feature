@@ -10,3 +10,11 @@ Feature: Evolving a dead cell
     | . | . | . |
     When I evolve the board
     Then the center cell should be dead
+
+  Scenario: Dead cell with 1 neighbor stays dead
+    Given the following setup
+    | . | x | . |
+    | . | . | . |
+    | . | . | . |
+    When I evolve the board
+    Then the center cell should be dead
