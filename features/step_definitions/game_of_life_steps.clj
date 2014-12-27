@@ -1,10 +1,14 @@
-;; (ns step-definitions.game-of-life-steps)
-(use 'clojure.test)
-;; (require game_of_life_clj.core :refer :all)
+(require '[game-of-life-clj.core :refer :all]
+         '[clojure.test :refer :all])
 
-(require '[game-of-life-clj.core :refer :all])
+(Given #"^the following setup$" [table]
+       (let [data (map #(into [] %) (.raw table))]
+         (reset! grid data)))
 
-(Given #"^nothing$" [])
+(When #"^I evolve the board$" []
+      (evolve-game))
 
-(Then #"^I should get hello world$" []
-      (is (= "hello_world" (hello_world))))
+(Then #"^the center cell should be dead$" []
+      (let [x (/ (grid-width) 2)
+            y (/ (grid-height) 2)]
+        (is (dead? [x y]))))
