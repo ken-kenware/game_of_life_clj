@@ -1,4 +1,4 @@
-# game_of_life_clj
+# game_of_life_clj [![Build Status](https://travis-ci.org/cskksc/game_of_life_clj.svg)](https://travis-ci.org/cskksc/game_of_life_clj)
 
 Implementation of Conway's Game of Life in clojure.
 
