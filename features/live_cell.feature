@@ -18,3 +18,11 @@ Feature: Evolving a living cell
     | . | . | . |
     When I evolve the board
     Then the center cell should be "dead"
+
+  Scenario: Living cell with 2 neighbors lives
+    Given the following setup
+    | . | x | . |
+    | . | x | x |
+    | . | . | . |
+    When I evolve the board
+    Then the center cell should be "alive"
