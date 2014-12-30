@@ -8,6 +8,8 @@ Run tests using:
 
     $ lein cucumber
 
+Features taken from: https://github.com/coreyhaines/practice_game_of_life.git
+
 ## License
 
 Copyright © 2014 Chaitanya Koparkar
