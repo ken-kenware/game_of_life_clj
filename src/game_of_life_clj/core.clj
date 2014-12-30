@@ -1,54 +1,59 @@
 (ns game-of-life-clj.core
-  (:gen-class))
+  (:gen-class)
+  (:require [clojure.set :as set]))
 
-(def grid (atom []))
+(def next-state (atom []))
 
-(defn grid-height []
-  (count @grid))
+(defn grid-height [grid]
+  (count grid))
 
-(defn grid-width []
-  (count (nth @grid 0)))
+(defn grid-width [grid]
+  (count (first grid)))
 
-(defn- at [x y]
-  (-> @grid (nth x) (nth y)))
+(defn- at [grid x y]
+  (-> grid (nth x) (nth y)))
 
-(defn alive? [[x y]]
-  (= (at x y) "x"))
+(defn alive? [grid [x y]]
+  (= (at grid x y) "x"))
 
-(defn dead? [[x y]]
-  (not (alive? [x y])))
+(defn dead? [grid [x y]]
+  (not (alive? grid [x y])))
 
-(defn- neighbors [[x y]]
+(defn- neighbors [grid [x y]]
   (for [dx [-1 0 1] dy [-1 0 1]
         :let [tx (+ dx x) ty (+ dy y)]
         :when (and
                (not= 0 dx dy)
                (not (neg? tx))
                (not (neg? ty))
-               (< tx (grid-width))
-               (< ty (grid-height)))]
+               (< tx (grid-width grid))
+               (< ty (grid-height grid))
+               )]
     [tx ty]))
 
-(defn- live-neighbors [[x y]]
-  (for [n (neighbors [x y])
-        :when (alive? n)]
+(defn- live-neighbors [grid [x y]]
+  (for [n (neighbors grid [x y])
+        :when (alive? grid n)]
     n))
 
-(defn- evolve-dead [[x y]]
-  (swap! grid assoc-in [x y] (cond
-                              (= (count (live-neighbors [x y])) 3) "x"
-                              :else "."
-                              )))
+(defn evolve-dead [grid [x y]]
+  (swap! next-state assoc-in [x y] (if (= (count (live-neighbors grid [x y])) 3)
+                                     "x"
+                                     "."
+                                     )))
 
-(defn- evolve [[x y]]
-  (cond
-   (dead? [x y]) (evolve-dead [x y])
-   ))
+(defn evolve [grid [x y]]
+  (if (dead? grid [x y])
+    (evolve-dead grid [x y])
+    grid
+    ))
 
-(defn evolve-game []
-  (for [x (range (grid-width))
-        y (range (grid-height))]
-    (evolve [x y])))
+(defn evolve-game [grid]
+  (reset! next-state grid)
+  (vec
+   (for [x (range (count (first grid)))
+         y (range (count grid))]
+     (evolve grid [x y]))))
 
 (defn -main
   "I don't do a whole lot ... yet."

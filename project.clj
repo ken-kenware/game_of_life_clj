@@ -3,7 +3,8 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.6.0"]]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/math.numeric-tower "0.0.4"]]
   :plugins [[lein-cucumber "1.0.2"]]
   :cucumber-feature-paths ["features/"]
   :main ^:skip-aot game-of-life-clj.core

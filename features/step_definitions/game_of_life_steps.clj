@@ -1,14 +1,20 @@
 (require '[game-of-life-clj.core :refer :all]
-         '[clojure.test :refer :all])
+         '[clojure.test :refer :all]
+         '[clojure.math.numeric-tower :as math])
+
+(def gr (atom []))
 
 (Given #"^the following setup$" [table]
        (let [data (map #(into [] %) (.raw table))]
-         (reset! grid data)))
+         (reset! gr (vec data))))
 
 (When #"^I evolve the board$" []
-      (evolve-game))
+      (evolve-game @gr))
 
-(Then #"^the center cell should be dead$" []
-      (let [x (/ (grid-width) 2)
-            y (/ (grid-height) 2)]
-        (is (dead? [x y]))))
+(Then #"^the center cell should be \"([^\"]*)\"$" [state]
+      (let [x (math/floor (/ (grid-width @next-state) 2.0))
+            y (math/floor (/ (grid-height @next-state) 2.0))]
+        (if (= state "dead")
+          (is (dead? @next-state [x y]))
+          (is (alive? @next-state [x y]))))
+      )
