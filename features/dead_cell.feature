@@ -42,3 +42,11 @@ Feature: Evolving a dead cell
     | . | . | . |
     When I evolve the board
     Then the center cell should be "dead"
+
+  Scenario: Dead cell with 5 neighbors stays dead
+    Given the following setup
+    | x | x | x |
+    | x | . | x |
+    | . | . | . |
+    When I evolve the board
+    Then the center cell should be "dead"
