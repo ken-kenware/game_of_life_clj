@@ -42,10 +42,17 @@
                                      "."
                                      )))
 
+(defn evolve-alive [grid [x y]]
+  (swap! next-state assoc-in [x y]
+         (cond
+          (< (count (live-neighbors grid [x y])) 2) "."
+          :else "x"
+          )))
+
 (defn evolve [grid [x y]]
   (if (dead? grid [x y])
     (evolve-dead grid [x y])
-    grid
+    (evolve-alive grid [x y])
     ))
 
 (defn evolve-game [grid]
