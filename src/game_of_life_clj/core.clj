@@ -44,10 +44,12 @@
 
 (defn evolve-alive [grid [x y]]
   (swap! next-state assoc-in [x y]
-         (cond
-          (< (count (live-neighbors grid [x y])) 2) "."
-          :else "x"
-          )))
+         (let [live-ns (live-neighbors grid [x y])]
+           (cond
+            (< (count live-ns) 2) "."
+            (> (count live-ns) 3) "."
+            :else "x"
+            ))))
 
 (defn evolve [grid [x y]]
   (if (dead? grid [x y])
