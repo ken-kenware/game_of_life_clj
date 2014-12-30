@@ -18,21 +18,6 @@ Feature: Cell configurations that are static
     | . | . | . | . | . |
     | . | . | . | . | . |
 
-  Scenario: Beehive
-    Given the following setup
-    | . | . | . | . | . | . |
-    | . | . | x | x | . | . |
-    | . | x | . | . | x | . |
-    | . | . | x | x | . | . |
-    | . | . | . | . | . | . |
-    When I evolve the board
-    Then I should see the following board
-    | . | . | . | . | . | . |
-    | . | . | x | x | . | . |
-    | . | x | . | . | x | . |
-    | . | . | x | x | . | . |
-    | . | . | . | . | . | . |
-
   Scenario: Loaf
     Given the following setup
     | . | . | . | . | . | . |
