@@ -9,7 +9,8 @@
          (reset! gr data)))
 
 (When #"^I evolve the board$" []
-      (evolve-game @gr))
+      (evolve-game @gr)
+      (reset! gr @next-state))
 
 (Then #"^the center cell should be \"([^\"]*)\"$" [state]
       (let [x (math/floor (/ (grid-width @next-state) 2.0))
