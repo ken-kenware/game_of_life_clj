@@ -4,9 +4,9 @@
 
 (def gr (atom []))
 
-(Given #"^the following setup$" [table]
-       (let [data (map #(into [] %) (.raw table))]
-         (reset! gr (vec data))))
+(Given #"^the following setup$" [board]
+       (let [data (vec (map #(into [] %) (.raw board)))]
+         (reset! gr data)))
 
 (When #"^I evolve the board$" []
       (evolve-game @gr))
@@ -18,3 +18,7 @@
           (is (dead? @next-state [x y]))
           (is (alive? @next-state [x y]))))
       )
+
+(Then #"^I should see the following board$" [board]
+      (let [expected (vec (map #(into [] %) (.raw board)))]
+        (is (= expected @next-state))))
