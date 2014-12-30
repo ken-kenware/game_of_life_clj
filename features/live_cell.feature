@@ -50,3 +50,27 @@ Feature: Evolving a living cell
     | . | . | . |
     When I evolve the board
     Then the center cell should be "dead"
+
+  Scenario: Living cell with 6 neighbors dies
+    Given the following setup
+    | x | x | x |
+    | x | x | x |
+    | x | . | . |
+    When I evolve the board
+    Then the center cell should be "dead"
+
+  Scenario: Living cell with 7 neighbors dies
+    Given the following setup
+    | x | x | x |
+    | x | x | x |
+    | x | x | . |
+    When I evolve the board
+    Then the center cell should be "dead"
+
+  Scenario: Living cell with 8 neighbors dies
+    Given the following setup
+    | x | x | x |
+    | x | x | x |
+    | x | x | x |
+    When I evolve the board
+    Then the center cell should be "dead"
